@@ -1,15 +1,21 @@
 from statistics import mean
 import numpy as np
 import matplotlib.pyplot as plt
-
+from matplotlib import style
+style.use('fivethirtyeight')
 
 xs = np.array([1,2,3,4,5,6] , dtype = np.float64)
 ys = np.array([5,4,6,5,6,7], dtype = np.float64)
 
-def best_fit_slope(xs,ys) :
+def best_fit_slope_and_intercept(xs,ys) :
 	m = (((mean(xs)*mean(ys)) - mean(xs*ys)) /
 			((mean(xs)*mean(xs)) - mean(xs*xs) ))
-	return m
+	b = mean(ys) - m*mean(xs)
+	return m ,b 
 
-m = best_fit_slope(xs,ys)
-print(m) #Here is m !
+m,b = best_fit_slope_and_intercept(xs,ys)
+regression_line =[(m*x)+b for x in xs] # Get every x in the xs array and get the y values from it while calculating the (mx+b) !
+#We can now predict the outputs from this equation ! We have a equation that we found out the m and b of it !
+plt.scatter(xs,ys)
+plt.plot(xs,regression_line)
+plt.show()
